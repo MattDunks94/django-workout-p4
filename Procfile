@@ -1,0 +1,1 @@
+web: gunicorn django_workout_tracker.wsgi
