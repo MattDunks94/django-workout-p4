@@ -4,3 +4,11 @@
 - dj_database_url psycopg2
 - dj3-cloudinary-storage
 - django-allauth
+
+* env.py ..
+
+import os
+
+os.environ["DATABASE_URL"] = ""
+os.environ["CLOUDINARY_URL"] = ""
+os.environ["SECRET_KEY"] = ""
