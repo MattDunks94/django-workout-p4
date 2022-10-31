@@ -1,0 +1,5 @@
+* pip3 ...
+
+- 'django<4' gunicorn
+- dj_database_url psycopg2
+- dj3-cloudinary-storage
