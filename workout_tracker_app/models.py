@@ -45,6 +45,9 @@ class Exercise(models.Model):
         User, on_delete=models.CASCADE, related_name='created_by'
         )
 
+    class Meta:
+        ordering = ['created_on']
+
     def __str__(self):
         return self.name
 
