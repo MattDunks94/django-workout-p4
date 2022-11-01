@@ -1,11 +1,16 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        {% for workout in workout_list %}
-        <div class="card mb-3">
-            <img src="..." class="card-img-top" alt="...">
+        {% for workout in workout %}
+        <div class="card mb-3 w-50 text-center m-auto">
+            {% if "placeholder" in workout.featured_image.url %}
+            <img src="https://res.cloudinary.com/die65ihvc/image/upload/v1667139010/PROJECT-4/featured-placeholder_psw6rc.jpg"
+                class="card-img-top h-50" alt="placeholder">
+            {% else %}
+            <img src="{{ workout.featured_image.url }}" class="card-img-top" alt="featured_image">
+            {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ workout.title }}</h5>
                 <p class="card-text">{{ workout.excerpt }}</p>
