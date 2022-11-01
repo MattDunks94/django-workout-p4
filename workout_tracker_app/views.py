@@ -5,5 +5,7 @@ from .models import WorkoutPost
 
 class WorkoutList(generic.ListView):
     model = WorkoutPost
-    queryset = WorkoutPost.objects.all().order_by('-created_on')
-    template_name = "index.html"
+    queryset = WorkoutPost.objects.all()
+    context_object_name = 'workout'
+    template_name = 'index.html'
+    paginate_by = 2
