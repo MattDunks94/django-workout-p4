@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from django.views import generic
+from django.shortcuts import render, get_object_or_404
+from django.views import generic, View
 from .models import WorkoutPost, Exercise
+from .forms import ExerciseForm
 
 
 class WorkoutList(generic.ListView):
@@ -10,19 +11,23 @@ class WorkoutList(generic.ListView):
     template_name = 'index.html'
 
 
-class CreateExercise(generic.CreateView):
-    model = Exercise
-    fields = ['name', 'sets', 'reps', 'weight']
-    success_url = 'exercise_list.html'
-    template_name = 'exercise_form.html'
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
-
-
 class ExerciseList(generic.ListView):
     model = Exercise
     queryset = Exercise.objects.all()
     context_object_name = 'exercise'
-    template_name = 'exercise_list.html'
+    template_name = 'workout_detail.html'
+
+
+class WorkoutDetail(View):
+
+    def get(self, request, slug, *args, **kwargs):
+        queryset = WorkoutPost.objects.all()
+        workout = get_object_or_404(queryset, slug=slug)
+        exercises = workout.exercise.order_by('created_on')
+
+        return render(request, 'workout_detail.html', {
+            "workout": workout,
+            "exercise": exercises,
+
+        },
+        )
