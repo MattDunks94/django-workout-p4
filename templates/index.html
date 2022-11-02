@@ -6,13 +6,20 @@
         {% for workout in workout %}
         <div class="card mb-3 w-50 text-center m-auto">
             {% if "placeholder" in workout.featured_image.url %}
-            <img src="https://res.cloudinary.com/die65ihvc/image/upload/v1667139010/PROJECT-4/featured-placeholder_psw6rc.jpg"
-                class="card-img-top h-50" alt="placeholder">
+            <a href="{% url 'exercise_detail' workout.slug %}">
+                <img src="https://res.cloudinary.com/die65ihvc/image/upload/v1667139010/PROJECT-4/featured-placeholder_psw6rc.jpg"
+                    class="card-img-top h-50" alt="placeholder">
+            </a>
             {% else %}
-            <img src="{{ workout.featured_image.url }}" class="card-img-top" alt="featured_image">
+            <a href="{% url 'exercise_detail' workout.slug %}">
+                <img src="{{ workout.featured_image.url }}" class="card-img-top" alt="featured_image">
+            </a>
             {% endif %}
             <div class="card-body">
-                <h5 class="card-title">{{ workout.title }}</h5>
+                </a>
+                <a href="{% url 'exercise_detail' workout.slug %}">
+                    <h5 class="card-title">{{ workout.title }}</h5>
+                </a>
                 <p class="card-text">{{ workout.excerpt }}</p>
                 <p class="card-text"><small class="text-muted">{{ workout.updated_on }}</small></p>
             </div>
