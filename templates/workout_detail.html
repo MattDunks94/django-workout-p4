@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-center py-3">{{ workout.title }}</h1>
+<div class="row">
+    <div class="col-md-8 m-auto py-3">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Sets</th>
+                    <th scope="col">Reps</th>
+                    <th scope="col">Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exercise in exercise %}
+                <tr>
+                    <th scope="row">{{ exercise.name }}</th>
+                    <td>{{ exercise.sets }}</td>
+                    <td>{{ exercise.reps }}</td>
+                    <td>{{ exercise.weight }} <span>kg</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <th scope="row">No Exercises</th>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="#">
+            <button type="button" class="btn btn-primary float-right">Add Exercise</button>
+        </a>
+    </div>
+</div>
+{% endblock %}
