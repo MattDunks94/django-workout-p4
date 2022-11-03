@@ -28,6 +28,12 @@ class WorkoutDetail(View):
         return render(request, 'workout_detail.html', {
             "workout": workout,
             "exercise": exercises,
-
         },
         )
+
+
+class AddExerciseForm(View):
+    
+    def add_exercise_form():
+        return render(request, 'add_exercise.html')
+    
