@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<h1 class="text-center py-3">{{ workout.title }}</h1>
+<div class="row text-center m-auto">
+    <div class="col-12">
+        <h1 class="text-center py-3">{{ workout.title }}</h1>
+        <p>Publisher: {{ workout.author }}</p>
+        <p class="text-center">{{ workout.excerpt }}</p>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-8 m-auto py-3">
+        <em><span class="float-right">Created: {{ workout.created_on }}</span></em>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Sets</th>
                     <th scope="col">Reps</th>
-                    <th scope="col">Weight</th>
+                    <th scope="col">Weight (kg)</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,9 +38,15 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% if user.is_authenticated %}
         <a href="#">
             <button type="button" class="btn btn-primary float-right">Add Exercise</button>
         </a>
+        {% else %}
+        <button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="To add or edit exercises, please">
+            Add Exercise
+        </button>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
