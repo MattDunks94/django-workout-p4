@@ -24,19 +24,32 @@ class WorkoutDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = WorkoutPost.objects.all()
         workout = get_object_or_404(queryset, slug=slug)
-        exercises = workout.exercise.order_by('created_on')
+        exercise = Exercise.objects.all()
 
         return render(request, 'workout_detail.html', {
             "workout": workout,
             "exercise": exercises,
+            "exercise_form": ExerciseForm()
         },
         )
 
+    def post(self, request, slug, *args, **kwargs):
+        queryset = WorkoutPost.objects.all()
+        workout = get_object_or_404(queryset, slug=slug)
+        exercise = Exercise.objects.all()
 
-class AddExerciseForm(generic.FormView):
-    def add_exercise_form():
-        form_class = ExerciseForm
-        return render(request, 'add_exercise.html', {
-            "exercise_form": ExerciseForm
-        })
-    
+        exercise_form = ExerciseForm(data=request.POST)
+        if exercise_form.is_valid():
+            exercise = exercise_form.save(commit=False)
+            exercise.workout = workout
+            exercise.save()
+        else:
+            exercise_form = ExerciseForm()
+
+        return render(request, 'workout_detail.html', {
+            "workout": workout,
+            "exercise": exercises,
+            "exercise_form": ExerciseForm()
+        },
+        )
+
