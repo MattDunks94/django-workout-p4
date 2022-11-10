@@ -42,7 +42,7 @@ class Exercise(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='created_by'
+        User, on_delete=models.CASCADE, related_name='created_by', null=True
         )
 
     class Meta:
