@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic, View
+from django.http import HttpResponseRedirect
 from .models import WorkoutPost, Exercise
 from .forms import ExerciseForm
 
@@ -24,11 +25,11 @@ class WorkoutDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = WorkoutPost.objects.all()
         workout = get_object_or_404(queryset, slug=slug)
-        exercise = Exercise.objects.all()
+        exercise = Exercise.objects.filter(**kwargs).values()
 
         return render(request, 'workout_detail.html', {
             "workout": workout,
-            "exercise": exercises,
+            "exercise": exercise,
             "exercise_form": ExerciseForm()
         },
         )
@@ -36,19 +37,20 @@ class WorkoutDetail(View):
     def post(self, request, slug, *args, **kwargs):
         queryset = WorkoutPost.objects.all()
         workout = get_object_or_404(queryset, slug=slug)
-        exercise = Exercise.objects.all()
+        exercise = Exercise.objects.filter(**kwargs).values()
 
         exercise_form = ExerciseForm(data=request.POST)
         if exercise_form.is_valid():
             exercise = exercise_form.save(commit=False)
             exercise.workout = workout
+
             exercise.save()
         else:
             exercise_form = ExerciseForm()
 
         return render(request, 'workout_detail.html', {
             "workout": workout,
-            "exercise": exercises,
+            "exercise": exercise,
             "exercise_form": ExerciseForm()
         },
         )
